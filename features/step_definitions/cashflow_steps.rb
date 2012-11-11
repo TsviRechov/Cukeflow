@@ -1,5 +1,5 @@
 Given /^that I do not have a cashflow account$/ do
-	Account.empty?.should == true
+	Account.all.empty?.should == true
 end
 
 When /^I go to the homepage$/ do
