@@ -103,11 +103,11 @@ When /^I go to view my cashflow account$/ do
 	visit( account_path( @account))
 end
 
-Then /^I see all of the items in my cashflow account$/ do
+Then /^I see the "(.*?)" items in my cashflow account$/ do |item_count|
 	current_path.should == account_path( @account)
-	page.all( "table tr").length.should == 3
-	page.all( "table tr")[1..2].map { |e| 
+	ic = item_count.to_i
+	page.all( "table#account_items tr").length.should == ic + 1
+	page.all( "table#account_items tr")[1..ic].map { |e| 
 		e.all( "td").map { |td| td.text.strip } 
-	}.should == @items_table[1..2]
+	}.should == @items_table[1..ic]
 end
-

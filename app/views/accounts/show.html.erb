@@ -4,7 +4,7 @@
 
 <h2> your account items: </h2>
 
-<table>
+<table id="account_items">
 	<tr>
 		<th> date </th>
 		<th> note </th>
@@ -19,6 +19,17 @@
 		<td> <%= item.amount %> </td>
 	</tr>
 <% } %>
+</table>
+
+<table>
+	<tr>
+		<th> Total Income</th>
+		<th> Total Expenses</th>
+	</tr>
+	<tr>
+		<td id="total_income"> <%= @account.total_income %> </td>
+		<td id="total_expenses"> <%= @account.total_expenses %> </td>
+	</tr>
 </table>
 
 <h2> Add a new item into your account: </h2>

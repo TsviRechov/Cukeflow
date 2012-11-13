@@ -29,4 +29,4 @@ Feature: user views all items in cashflow account
 				| November 10, 2012	| ruby on rails	| income	| 6000.0 	|
 				| November 10, 2012	| air tix to nj | expense	| 450.0  	|
 		When I go to view my cashflow account
-		Then I see all of the items in my cashflow account
+		Then I see the "2" items in my cashflow account
