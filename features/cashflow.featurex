@@ -1,10 +1,5 @@
 Feature:
 	As a user
-	I want to be able to see the items in my cashflow account
-	in order to know when I am running out of money
-
-Feature:
-	As a user
 	I want to be able to see
 	my total income and total expenses
 	for all the items in my cashflow account

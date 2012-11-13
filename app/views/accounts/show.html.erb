@@ -1,10 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @account.name %>
-</p>
+<h1> Account for: <%= @account.name %> </h1>
 
+<h2> your account items: </h2>
+
+<table>
+	<tr>
+		<th> date </th>
+		<th> note </th>
+		<th> pnl </th>
+		<th> amount </th>
+	</tr>
+<% @account.items.each { |item| %>
+	<tr>
+		<td> <%= item.formatted_date %> </td>
+		<td> <%= item.note %> </td>
+		<td> <%= item.pnl %> </td>
+		<td> <%= item.amount %> </td>
+	</tr>
+<% } %>
+</table>
+
+<h2> Add a new item into your account: </h2>
+
+<%= simple_form_for @account.items.build do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :date, :as => :date %>
+  <%= f.input :note %>
+  <%= f.input :pnl, :collection => Item.pnl_types, :include_blank => false %>
+  <%= f.input :amount %>
+	<%= f.hidden_field :account_id, :value => @account.id %>
+
+  <%= f.button :submit %>
+<% end %>
 
 <%= link_to 'Edit', edit_account_path(@account) %> |
 <%= link_to 'Back', accounts_path %>

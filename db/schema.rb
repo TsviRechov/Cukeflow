@@ -11,12 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121111193609) do
+ActiveRecord::Schema.define(:version => 20121113030907) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "items", :force => true do |t|
+    t.integer  "account_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "pnl"
+    t.datetime "date"
+    t.string   "note"
+    t.decimal  "amount"
+  end
+
+  add_index "items", ["account_id"], :name => "index_items_on_account_id"
 
 end
