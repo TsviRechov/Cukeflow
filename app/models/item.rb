@@ -24,4 +24,16 @@ class Item < ActiveRecord::Base
 	def formatted_date
 		date.strftime( "%B %-d, %Y" )
 	end
+	
+	def income
+		(pnl == "income") ? amount.to_s : "-"
+	end
+
+	def expense
+		(pnl == "expense") ? amount.to_s : "-"
+	end
+
+	def to_a
+		[ self.formatted_date, self.note, self.income, self.expense ]
+	end
 end

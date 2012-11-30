@@ -2,35 +2,55 @@
 
 <h1> Account for: <%= @account.name %> </h1>
 
-<h2> your account items: </h2>
+<h2> <%= link_to "All" %> your account items:  </h2>
+
+<div id="date_range_selector" style="border:2px solid blue; width:300px">
+<%= form_tag @acccount, :method => "get" do %>
+<table>
+	<tr>
+		<td> <b> from: </b> </td>
+		<td> <%= select_date Date.today, :prefix => "begin" %> </td>
+	</tr>
+	<tr>
+		<td> <b> to: </b> </td>
+		<td> <%= select_date Date.today, :prefix => "end" %> </td>
+	<tr>
+	<tr>
+		<td> </td>
+		<td> <%= submit_tag( "Select Date Range") %> </td>
+	<tr>
+</table>
+<% end %>
+</div>
 
 <table id="account_items">
 	<tr>
-		<th> date </th>
-		<th> note </th>
-		<th> pnl </th>
-		<th> amount </th>
+		<% [ "date", "note", "income", "expense", "operations" ].each { |hdr| %>
+			<th> <%= hdr %> </th>
+		<% } %>
 	</tr>
-<% @account.items.each { |item| %>
+<% @account.its( @beginning, @ending).each { |item| %>
 	<tr>
 		<td> <%= item.formatted_date %> </td>
 		<td> <%= item.note %> </td>
-		<td> <%= item.pnl %> </td>
-		<td> <%= item.amount %> </td>
+		<td id="income" style="color:green"> <%= item.income %> </td>
+		<td id="expense" style="color:red"> <%= item.expense %> </td>
+		<td> <%= link_to "Remove" %> </td>
 	</tr>
 <% } %>
+
+	<tr>
+		<td> </td>
+		<td> <b> Total Income and Expenses </b></td>
+		<td id="total_income" style="color:green"> 
+			<%= @account.total_income( @beginning, @ending) %> 
+		</td>
+		<td id="total_expenses" style="color:red"> 
+			<%= @account.total_expenses( @beginning, @ending) %> 
+		</td>
+	</tr>
 </table>
 
-<table>
-	<tr>
-		<th> Total Income</th>
-		<th> Total Expenses</th>
-	</tr>
-	<tr>
-		<td id="total_income"> <%= @account.total_income %> </td>
-		<td id="total_expenses"> <%= @account.total_expenses %> </td>
-	</tr>
-</table>
 
 <h2> Add a new item into your account: </h2>
 

@@ -15,6 +15,20 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
 
+		@beginning, @ending = nil, nil
+		if params.has_key?( "begin") then
+			@beginning = Time.new(
+				params["begin"]["year"].to_i,
+				params["begin"]["month"].to_i,
+				params["begin"]["day"].to_i
+			)
+			@ending = Time.new(
+				params["end"]["year"].to_i,
+				params["end"]["month"].to_i,
+				params["end"]["day"].to_i
+			)
+		end
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @account }

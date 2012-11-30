@@ -61,9 +61,9 @@ end
 
 Then /^I see my account with its one item of type income$/ do
 	current_path.should == account_path( @account)
-	r = page.all( "table tr")[1].all( "td")
+	r = page.all( "table#account_items tr")[1].all( "td")[0..3]
 	r.map { |e| e.text.strip }.should ==
-		["November 13, 2013", "ruby on rails workshop", "income", "6000.0"]
+		["November 13, 2013", "ruby on rails workshop", "6000.0", "-"]
 end
 
 When /^I add an expense item to my account$/ do
@@ -80,9 +80,9 @@ end
 
 Then /^I see my account with its one item of type expense$/ do
 	current_path.should == account_path( @account)
-	r = page.all( "table tr")[1].all( "td")
+	r = page.all( "table#account_items tr")[1].all( "td")[0..3]
 	r.map { |e| e.text.strip }.should ==
-		["November 13, 2013", "air tickets to New Jersey", "expense", "450.0"]
+		["November 13, 2013", "air tickets to New Jersey", "-", "450.0"]
 end
 
 Given /^my cashflow account has the following items in it:$/ do |table|
@@ -106,8 +106,8 @@ end
 Then /^I see the "(.*?)" items in my cashflow account$/ do |item_count|
 	current_path.should == account_path( @account)
 	ic = item_count.to_i
-	page.all( "table#account_items tr").length.should == ic + 1
+	page.all( "table#account_items tr").length.should == ic + 2
 	page.all( "table#account_items tr")[1..ic].map { |e| 
-		e.all( "td").map { |td| td.text.strip } 
-	}.should == @items_table[1..ic]
+		e.all( "td")[0..3].map { |td| td.text.strip } 
+	}.should == @account.items.map { |i| i.to_a }
 end

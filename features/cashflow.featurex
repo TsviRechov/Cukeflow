@@ -1,11 +1,5 @@
 Feature:
 	As a user
-	I want to be able to see
-	my total income and total expenses
-	for all the items in my cashflow account
-
-Feature:
-	As a user
 	I want to be able to filter the view
 	of my cashflow account items
 	by a date range

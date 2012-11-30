@@ -37,9 +37,9 @@ end
 
 Then /^I see the "(.*?)" items in the "(.*?)" cashflow account$/ do |item_count, arg2|
 	ic = item_count.to_i
-	page.all( "table#account_items tr").length.should == ic + 1
+	page.all( "table#account_items tr").length.should == ic + 2
 	page.all( "table#account_items tr")[1..ic].map { |e| 
-		e.all( "td").map { |td| td.text.strip } 
-	}.should == @items_table[1..ic]
+		e.all( "td")[0..3].map { |td| td.text.strip } 
+	}.should == @account2.items.map { |i| i.to_a }
 end
 

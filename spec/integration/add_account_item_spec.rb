@@ -32,7 +32,11 @@ describe "add item to account" do
 			page.select '2013', :from => 'item_date_1i'
 			page.select 'November', :from => 'item_date_2i'
 			page.select '13', :from => 'item_date_3i'
-			# verify that the selects have been set as desired
+
+			# now that we are totaling income and expenses, need to set amount to something
+			# or we should default it in the database schema
+			page.fill_in( 'Amount', :with => 0.0)
+			
 			# OK, click the submit button
 			page.has_button?( 'Create Item').should be_true
 			@account.items.count.should == 0
@@ -47,6 +51,7 @@ describe "add item to account" do
 		it "the account owner can set the note for a new item" do
 			page.has_field?( 'Note').should be_true 
 			page.fill_in( 'Note', :with => "ruby on rails workshop")
+			page.fill_in( 'Amount', :with => 0.0)
 			page.find_button( 'Create Item').click
 			@account.items.where( :note => "ruby on rails workshop").count.should == 1
 		end
@@ -56,6 +61,7 @@ describe "add item to account" do
 			Item.pnl_types.sort.should == [ "expense", "income" ] # belongs in item_spec.rb
 
 			Item.pnl_types.each { |pnl|
+				page.fill_in( 'Amount', :with => 0.0)
 				page.select( pnl, :from => "Pnl")
 				page.find_button( 'Create Item').click
 				@account.items.where( :pnl => pnl).count.should == 1
@@ -80,11 +86,11 @@ describe "add item to account" do
 			page.find_button( 'Create Item').click
 			@account.items.count.should == 1
 			current_path.should == account_path( @account)
-			page.all( "table tr").length.should == 2
-			r = page.all( "table tr")[1].all( "td")
+			page.all( "table#account_items tr").length.should == @account.items.count + 2
+			r = page.all( "table#account_items tr")[1].all( "td")
 			r.length.should == 4
 			r.map { |e| e.text.strip }.should ==
-				["November 13, 2013", "ruby on rails workshop", "income", "6000.0"]
+				["November 13, 2013", "ruby on rails workshop", "6000.0", "-" ]
 		end
 	end
 end
