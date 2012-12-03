@@ -15,6 +15,8 @@ group :test, :development do
 end
 
 group :test do
+	gem 'guard-rspec'
+	gem 'rb-inotify', '~> 0.8.8'
   gem 'cucumber-rails', :require => false
   # database_cleaner is not required, but highly recommended
   gem 'database_cleaner'

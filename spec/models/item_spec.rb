@@ -15,5 +15,16 @@
 require 'spec_helper'
 
 describe Item do
-  pending "add some examples to (or delete) #{__FILE__}"
+	
+	let( :item) { Item.create( :pnl => "expense") }
+
+  it "has a type (pnl) - expense or income" do
+		item.pnl.should == "expense"
+		item.pnl = "income"
+		item.pnl.should == "income"
+	end
+
+	it "has a non-empty note" do
+		item.note.should be_nil
+	end
 end
