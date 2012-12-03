@@ -2,27 +2,10 @@ require 'spec_helper'
 
 describe "account show page: filter items by date range" do
   before :all do
-		@items_table = [
-			[ "October 15, 2012"  , "jqery jasmine" , "income" , 3000.0 ],
-			[ "October 11, 2012"  , "faster laptop" , "expense" , 1100.0 ],
-			[ "November 10, 2012" , "ruby on rails" , "income"  , 6000.0 ],
-			[ "November 10, 2012" , "air tix to nj" , "expense" , 450.0  ]
-		]
-
-		@account = Account.create( :name => "Tsvi Bar-David")
-		@items_table.each { |r|
-			@account.items.create(
-				:date =>	r[0],
-				:note =>	r[1],
-				:pnl =>		r[2],
-				:amount => r[3]
-			)
-		}
-
+		@account = create( :account)
 		@t0, @t1 = "November 9, 2012", "November 11, 2012"
 		@beginning = Date.parse( @t0).to_time
 		@ending = Date.parse( @t1).to_time
-
 	end
 
 	after :all do

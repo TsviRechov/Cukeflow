@@ -27,4 +27,16 @@ describe Item do
 	it "has a non-empty note" do
 		item.note.should be_nil
 	end
+
+	it "can create an income item with factory girl" do
+		income = create( :income_item)
+		income.should_not be_nil
+		income.amount.should == 6000.0
+	end
+
+	it "can create an income item with factory girl" do
+		expense = create( :expense_item)
+		expense.amount.should == 450.0
+		expense.note.should == "air tix to nj"
+	end
 end

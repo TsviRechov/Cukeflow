@@ -88,8 +88,8 @@ describe "add item to account" do
 			current_path.should == account_path( @account)
 			page.all( "table#account_items tr").length.should == @account.items.count + 2
 			r = page.all( "table#account_items tr")[1].all( "td")
-			r.length.should == 4
-			r.map { |e| e.text.strip }.should ==
+			r.length.should == 5
+			r[0..3].map { |e| e.text.strip }.should ==
 				["November 13, 2013", "ruby on rails workshop", "6000.0", "-" ]
 		end
 	end

@@ -12,22 +12,7 @@ require 'spec_helper'
 
 describe Account do
   before :all do
-		@items_table = [
-			[ "October 15, 2012"  , "jqery jasmine" , "income" , 3000.0 ],
-			[ "October 11, 2012"  , "faster laptop" , "expense" , 1100.0 ],
-			[ "November 10, 2012" , "ruby on rails" , "income"  , 6000.0 ],
-			[ "November 10, 2012" , "air tix to nj" , "expense" , 450.0  ]
-		]
-
-		@account = Account.create( :name => "Tsvi Bar-David")
-		@items_table.each { |r|
-			@account.items.create(
-				:date =>	r[0],
-				:note =>	r[1],
-				:pnl =>		r[2],
-				:amount => r[3]
-			)
-		}
+		@account = create( :account ) # factory girl! with has_many to items
 
 		@t0, @t1 = "November 9, 2012", "November 11, 2012"
 		@beginning = Date.parse( @t0).to_time
@@ -37,6 +22,11 @@ describe Account do
 
 	after :all do
 		Account.destroy_all; Item.destroy_all
+	end
+
+	it "created an account with factory girl and it is not nil" do
+		@account.should_not be_nil
+		@account.name.should == "Tsvi Bar-David"
 	end
 
 	it "can create an account with items" do
